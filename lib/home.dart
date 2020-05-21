@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:salaris_app/blocs/salary_bloc.dart';
 import 'package:salaris_app/components/custom_bottom_navbar.dart';
 import 'package:salaris_app/components/hour_entry_card.dart';
 import 'package:salaris_app/components/stat_card.dart';
@@ -7,6 +9,8 @@ import 'styles.dart';
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final SalaryBloc salaryBloc = Provider.of<SalaryBloc>(context);
+
     return SafeArea(
       child: Scaffold(
         // Bottom navigation bar
@@ -72,19 +76,13 @@ class HomePage extends StatelessWidget {
                     slivers: <Widget>[
                       SliverList(
                         delegate: SliverChildListDelegate(
-                          [
-                            HourEntry(),
-                            HourEntry(),
-                            HourEntry(),
-                            HourEntry(),
-                            HourEntry(),
-                            HourEntry(),
-                            HourEntry(),
-                            HourEntry(),
-                            HourEntry(),
-                            HourEntry(),
-                            HourEntry(),
-                          ],
+                          salaryBloc.salaryEntries
+                              .map(
+                                (e) => HourEntry(
+                                  salaryEntry: e,
+                                ),
+                              )
+                              .toList(),
                         ),
                       )
                     ],
