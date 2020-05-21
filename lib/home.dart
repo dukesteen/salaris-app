@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:salaris_app/custom_bottom_navbar.dart';
-import 'package:salaris_app/hour_entry_card.dart';
-import 'package:salaris_app/stat_card.dart';
+import 'package:salaris_app/components/custom_bottom_navbar.dart';
+import 'package:salaris_app/components/hour_entry_card.dart';
+import 'package:salaris_app/components/stat_card.dart';
 import 'styles.dart';
 
 class HomePage extends StatelessWidget {
