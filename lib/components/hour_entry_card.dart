@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:salaris_app/models/salary_model.dart';
 import 'package:salaris_app/styles.dart';
 
 class HourEntry extends StatelessWidget {
+  final SalaryModel salaryEntry;
+
+  HourEntry({this.salaryEntry});
+
   @override
   Widget build(BuildContext context) {
     return Container(
