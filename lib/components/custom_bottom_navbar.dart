@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:salaris_app/blocs/salary_bloc.dart';
+import 'package:salaris_app/models/salary_model.dart';
 import 'package:salaris_app/styles.dart';
 
 class CustomBottomNavbar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final SalaryBloc salaryBloc = Provider.of<SalaryBloc>(context);
+
     return Container(
       height: 90.0,
       decoration: BoxDecoration(
@@ -30,7 +35,14 @@ class CustomBottomNavbar extends StatelessWidget {
             width: 60.0,
             height: 60.0,
             child: FloatingActionButton(
-              onPressed: null,
+              onPressed: () {
+                salaryBloc.add(
+                  SalaryModel(
+                      hoursWorked: 11.0,
+                      dateWorked: DateTime.now(),
+                      hourlyWage: 6.0),
+                );
+              },
               backgroundColor: UiColors.spaceCadet,
               elevation: 0.0,
               shape: RoundedRectangleBorder(

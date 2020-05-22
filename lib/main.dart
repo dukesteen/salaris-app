@@ -19,10 +19,6 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         title: 'Salaris',
-        theme: ThemeData(
-            textTheme: TextTheme(
-          headline1: TextStyle(),
-        )),
         home: HomePage(),
       ),
     );
