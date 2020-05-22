@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:salaris_app/blocs/salary_bloc.dart';
-import 'package:salaris_app/home.dart';
+import 'package:salaris_app/pages/home.dart';
 import 'package:provider/provider.dart';
+import 'package:salaris_app/pages/salary_entry_add.dart';
 
 void main() {
   runApp(MyApp());
@@ -18,8 +19,11 @@ class MyApp extends StatelessWidget {
         ),
       ],
       child: MaterialApp(
-        title: 'Salaris',
-        home: HomePage(),
+        initialRoute: '/',
+        routes: {
+          '/': (context) => HomePage(),
+          '/add': (context) => SalaryEntryAdd(),
+        },
       ),
     );
   }

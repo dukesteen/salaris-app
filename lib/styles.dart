@@ -23,13 +23,6 @@ class UiTextStyles {
     fontWeight: FontWeight.w600,
   );
 
-  static const TextStyle montserrat20ptSemiBoldRed = TextStyle(
-    color: UiColors.redSalsa,
-    fontSize: 20.0,
-    fontFamily: 'Montserrat',
-    fontWeight: FontWeight.w600,
-  );
-
   static const TextStyle montserrat16ptSemiBoldSpaceCadet = TextStyle(
     color: UiColors.spaceCadet,
     fontSize: 16.0,
@@ -37,6 +30,19 @@ class UiTextStyles {
     fontWeight: FontWeight.w700,
   );
 
+  static const TextStyle montserrat16ptSemiBoldWhite = TextStyle(
+    color: UiColors.white,
+    fontSize: 16.0,
+    fontFamily: 'Montserrat',
+    fontWeight: FontWeight.w700,
+  );
+
+  static const TextStyle montserrat20ptSemiBoldRed = TextStyle(
+    color: UiColors.redSalsa,
+    fontSize: 20.0,
+    fontFamily: 'Montserrat',
+    fontWeight: FontWeight.w600,
+  );
   static const TextStyle montserrat30ptBoldSpaceCadet = TextStyle(
     color: UiColors.spaceCadet,
     fontSize: 30.0,

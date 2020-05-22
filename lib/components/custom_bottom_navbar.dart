@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:salaris_app/blocs/salary_bloc.dart';
 import 'package:salaris_app/models/salary_model.dart';
+import 'package:salaris_app/pages/salary_entry_add.dart';
 import 'package:salaris_app/styles.dart';
 
 class CustomBottomNavbar extends StatelessWidget {
@@ -36,12 +37,14 @@ class CustomBottomNavbar extends StatelessWidget {
             height: 60.0,
             child: FloatingActionButton(
               onPressed: () {
-                salaryBloc.add(
-                  SalaryModel(
-                      hoursWorked: 11.0,
-                      dateWorked: DateTime.now(),
-                      hourlyWage: 6.0),
-                );
+                showDialog(
+                    context: context, builder: (context) => SalaryEntryAdd());
+                // salaryBloc.add(
+                //   SalaryModel(
+                //       hoursWorked: 11.0,
+                //       dateWorked: DateTime.now(),
+                //       hourlyWage: 6.0),
+                // );
               },
               backgroundColor: UiColors.spaceCadet,
               elevation: 0.0,
