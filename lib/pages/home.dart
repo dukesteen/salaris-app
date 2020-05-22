@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:salaris_app/blocs/salary_bloc.dart';
 import 'package:salaris_app/components/custom_bottom_navbar.dart';
@@ -10,6 +11,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final SalaryBloc salaryBloc = Provider.of<SalaryBloc>(context);
+    final currencyFormatter = new NumberFormat("#,##0.00", "en_US");
 
     return SafeArea(
       child: Scaffold(
@@ -47,9 +49,26 @@ class HomePage extends StatelessWidget {
                     child: ListView(
                       scrollDirection: Axis.horizontal,
                       children: <Widget>[
-                        StatCard(),
-                        StatCard(),
-                        StatCard(),
+                        StatCard(
+                          title: 'Uren periode',
+                          value: salaryBloc.salaryEntries
+                              .fold(
+                                  0,
+                                  (previousValue, element) =>
+                                      previousValue + element.hoursWorked)
+                              .toString(),
+                        ),
+                        StatCard(
+                            title: 'Salaris periode',
+                            value: '€ ' +
+                                currencyFormatter.format(
+                                  salaryBloc.salaryEntries.fold(
+                                      0,
+                                      (previousValue, element) =>
+                                          previousValue +
+                                          (element.hoursWorked *
+                                              element.hourlyWage)),
+                                )),
                       ],
                     ),
                   ),

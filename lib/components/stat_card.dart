@@ -2,10 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:salaris_app/styles.dart';
 
 class StatCard extends StatelessWidget {
+  final String title;
+  final String value;
+
+  StatCard({this.title, this.value});
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 190.0,
+      //width: 190.0,
       height: 120.0,
       child: Card(
         margin: EdgeInsets.only(
@@ -16,18 +21,21 @@ class StatCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(22.0),
         ),
         child: Padding(
-          padding: EdgeInsets.only(top: 18.0, left: 18.0),
+          padding: EdgeInsets.only(left: 18.0, top: 18.0, right: 18.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
-                'Uren periode',
+                title,
                 style: UiTextStyles.montserrat16ptSemiBoldRed,
               ),
-              Text(
-                '70',
-                style: UiTextStyles.montserrat30ptBoldSpaceCadet,
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Text(
+                  '$value',
+                  style: UiTextStyles.montserrat30ptBoldSpaceCadet,
+                ),
               ),
             ],
           ),

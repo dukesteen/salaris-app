@@ -1,14 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:salaris_app/models/salary_model.dart';
 import 'package:salaris_app/styles.dart';
 
 class HourEntry extends StatelessWidget {
   final SalaryModel salaryEntry;
+  final DateFormat dateFormatter = DateFormat('MM/dd');
+  final currencyFormatter = new NumberFormat("#,##0.00", "en_US");
+  final currencyFormat1kPlus = new NumberFormat("#,##0", "en_US");
 
   HourEntry({this.salaryEntry});
 
   @override
   Widget build(BuildContext context) {
+    var currencyString;
+    var salary = salaryEntry.hourlyWage * salaryEntry.hoursWorked;
+
+    if (salary > 1000) {
+      currencyString = currencyFormat1kPlus.format(salary);
+    } else {
+      currencyString = currencyFormatter.format(salary);
+    }
+
     return Container(
       child: Card(
         shape: RoundedRectangleBorder(
@@ -26,18 +39,24 @@ class HourEntry extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    '07/13',
+                    dateFormatter.format(salaryEntry.dateWorked),
                     style: UiTextStyles.montserrat20ptSemiBoldRed,
                   ),
                   Text(
-                    '10 uren gewerkt',
+                    '${salaryEntry.hoursWorked} uren ',
                     style: UiTextStyles.montserrat16ptSemiBoldSpaceCadet,
                   ),
                 ],
               ),
-              Text(
-                '€ 60,00',
-                style: UiTextStyles.montserrat30ptBoldSpaceCadet,
+              SizedBox(
+                width: 10.0,
+              ),
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Text(
+                  '€ ' + currencyString,
+                  style: UiTextStyles.montserrat30ptBoldSpaceCadet,
+                ),
               ),
             ],
           ),

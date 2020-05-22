@@ -7,6 +7,21 @@ class SalaryBloc extends ChangeNotifier {
       hoursWorked: 10.0,
       dateWorked: DateTime.now(),
       hourlyWage: 5.0,
+    ),
+    SalaryModel(
+      hoursWorked: 24.0,
+      dateWorked: DateTime.now(),
+      hourlyWage: 416.0,
+    ),
+    SalaryModel(
+      hoursWorked: 24.0,
+      dateWorked: DateTime.now(),
+      hourlyWage: 416.0,
+    ),
+    SalaryModel(
+      hoursWorked: 24.0,
+      dateWorked: DateTime.now(),
+      hourlyWage: 416.0,
     )
   ];
 
