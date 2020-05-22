@@ -37,8 +37,25 @@ class CustomBottomNavbar extends StatelessWidget {
             height: 60.0,
             child: FloatingActionButton(
               onPressed: () {
-                showDialog(
-                    context: context, builder: (context) => SalaryEntryAdd());
+                showGeneralDialog(
+                    barrierColor: Colors.black.withOpacity(0.5),
+                    transitionBuilder: (context, a1, a2, widget) {
+                      final curvedValue =
+                          Curves.easeInOutBack.transform(a1.value) - 1.0;
+                      return Transform(
+                        transform: Matrix4.translationValues(
+                            0.0, curvedValue * -200, 0.0),
+                        child: Opacity(
+                          opacity: a1.value,
+                          child: SalaryEntryAdd(),
+                        ),
+                      );
+                    },
+                    transitionDuration: Duration(milliseconds: 400),
+                    barrierDismissible: true,
+                    barrierLabel: '',
+                    context: context,
+                    pageBuilder: (context, animation1, animation2) {});
                 // salaryBloc.add(
                 //   SalaryModel(
                 //       hoursWorked: 11.0,
