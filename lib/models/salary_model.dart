@@ -1,7 +1,7 @@
 class SalaryModel {
-  final double hoursWorked;
-  final DateTime dateWorked;
-  final double hourlyWage;
+  double hoursWorked;
+  DateTime dateWorked;
+  double hourlyWage;
 
   SalaryModel({this.hoursWorked, this.dateWorked, this.hourlyWage});
 }
