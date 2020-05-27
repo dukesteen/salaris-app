@@ -1,15 +1,59 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_rounded_date_picker/rounded_picker.dart';
+import 'package:provider/provider.dart';
+import 'package:salaris_app/blocs/salary_bloc.dart';
+import 'package:salaris_app/models/salary_model.dart';
 import 'package:salaris_app/styles.dart';
 
-class SalaryEntryAdd extends StatelessWidget {
+class SalaryEntryAdd extends StatefulWidget {
+  @override
+  _SalaryEntryAddState createState() => _SalaryEntryAddState();
+}
+
+class _SalaryEntryAddState extends State<SalaryEntryAdd> {
+  final hoursWorkedController = TextEditingController();
+  final hourlyWageController = TextEditingController();
+  SalaryModel salaryEntry = SalaryModel();
+
+  _hoursWorkedUpdate() {
+    setState(() {
+      salaryEntry.hoursWorked =
+          num.tryParse(hoursWorkedController.text)?.toDouble();
+    });
+    print(salaryEntry.hoursWorked);
+  }
+
+  _hourlyWageUpdate() {
+    setState(() {
+      salaryEntry.hourlyWage =
+          num.tryParse(hourlyWageController.text)?.toDouble();
+    });
+    print(salaryEntry.hourlyWage);
+  }
+
+  @override
+  void dispose() {
+    hoursWorkedController.dispose();
+    hourlyWageController.dispose();
+    super.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    hoursWorkedController.addListener(_hoursWorkedUpdate);
+    hourlyWageController.addListener(_hourlyWageUpdate);
+  }
+
   @override
   Widget build(BuildContext context) {
+    final SalaryBloc salaryBloc = Provider.of<SalaryBloc>(context);
+
     return Dialog(
       backgroundColor: Colors.transparent,
       elevation: 0,
       insetPadding: EdgeInsets.zero,
       child: Container(
-        //color: UiColors.richBlack.withOpacity(0.3),
         child: Center(
           child: Container(
             height: 380.0,
@@ -43,13 +87,28 @@ class SalaryEntryAdd extends StatelessWidget {
                         padding: EdgeInsets.symmetric(
                           vertical: 7.0,
                         ),
-                        onPressed: null,
-                        child: Text(
-                          'Pick',
-                          style: UiTextStyles.montserrat16ptSemiBoldRed,
-                        ),
+                        onPressed: () async {
+                          DateTime tempDateTime = await showRoundedDatePicker(
+                            context: context,
+                            initialDate:
+                                salaryEntry.dateWorked ?? DateTime.now(),
+                            firstDate: DateTime(DateTime.now().year - 1),
+                            lastDate: DateTime(DateTime.now().year + 1),
+                            borderRadius: 16,
+                          );
+                          setState(() {
+                            salaryEntry.dateWorked = tempDateTime;
+                          });
+                        },
+                        child: (salaryEntry.dateWorked == null)
+                            ? Text('Pick',
+                                style: UiTextStyles.montserrat16ptSemiBoldRed)
+                            : Text(
+                                '${salaryEntry.dateWorked.month}/${salaryEntry.dateWorked.day}',
+                                style: UiTextStyles.montserrat16ptSemiBoldRed,
+                              ),
                       ),
-                    )
+                    ),
                   ],
                 ),
                 SizedBox(
@@ -71,12 +130,25 @@ class SalaryEntryAdd extends StatelessWidget {
                         color: UiColors.white,
                       ),
                       width: 120.0,
-                      child: FlatButton(
-                        onPressed: null,
-                        child: Text(
-                          'Pick',
-                          style: UiTextStyles.montserrat16ptSemiBoldRed,
+                      child: TextFormField(
+                        controller: hoursWorkedController,
+                        keyboardType: TextInputType.number,
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(25),
+                            borderSide: BorderSide(
+                              width: 0,
+                              style: BorderStyle.none,
+                            ),
+                          ),
+                          hintText: '0.0',
+                          hintStyle: UiTextStyles.montserrat16ptSemiBoldRed,
+                          filled: true,
+                          contentPadding: EdgeInsets.all(14),
+                          fillColor: UiColors.white,
                         ),
+                        textAlign: TextAlign.center,
+                        style: UiTextStyles.montserrat16ptSemiBoldRed,
                       ),
                     )
                   ],
@@ -84,12 +156,12 @@ class SalaryEntryAdd extends StatelessWidget {
                 SizedBox(
                   height: 20.0,
                 ),
-                // Date worked ----------------------------------------------------------------
+                // Hourly wage ----------------------------------------------------------------
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text(
-                      'Date worked',
+                      'Hourly wage',
                       style: UiTextStyles.montserrat16ptSemiBoldWhite,
                     ),
                     Container(
@@ -100,12 +172,25 @@ class SalaryEntryAdd extends StatelessWidget {
                         color: UiColors.white,
                       ),
                       width: 120.0,
-                      child: FlatButton(
-                        onPressed: null,
-                        child: Text(
-                          'Pick',
-                          style: UiTextStyles.montserrat16ptSemiBoldRed,
+                      child: TextFormField(
+                        controller: hourlyWageController,
+                        keyboardType: TextInputType.number,
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(25),
+                            borderSide: BorderSide(
+                              width: 0,
+                              style: BorderStyle.none,
+                            ),
+                          ),
+                          hintText: '0.0',
+                          hintStyle: UiTextStyles.montserrat16ptSemiBoldRed,
+                          filled: true,
+                          contentPadding: EdgeInsets.all(14),
+                          fillColor: UiColors.white,
                         ),
+                        textAlign: TextAlign.center,
+                        style: UiTextStyles.montserrat16ptSemiBoldRed,
                       ),
                     )
                   ],
@@ -124,7 +209,14 @@ class SalaryEntryAdd extends StatelessWidget {
                         color: UiColors.redSalsa,
                       ),
                       child: FlatButton(
-                        onPressed: null,
+                        onPressed: () {
+                          try {
+                            salaryBloc.add(salaryEntry);
+                            Navigator.pop(context);
+                          } catch (e) {
+                            print(e.toString());
+                          }
+                        },
                         child: Text(
                           'Add',
                           style: UiTextStyles.montserrat16ptSemiBoldWhite,
