@@ -210,11 +210,11 @@ class _SalaryEntryAddState extends State<SalaryEntryAdd> {
                       ),
                       child: FlatButton(
                         onPressed: () {
-                          try {
+                          if (!(salaryEntry.dateWorked == null ||
+                              salaryEntry.hoursWorked == null ||
+                              salaryEntry.hourlyWage == null)) {
                             salaryBloc.add(salaryEntry);
                             Navigator.pop(context);
-                          } catch (e) {
-                            print(e.toString());
                           }
                         },
                         child: Text(

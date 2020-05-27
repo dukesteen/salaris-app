@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:salaris_app/blocs/salary_bloc.dart';
-import 'package:salaris_app/blocs/salary_entry_builder_bloc.dart';
 import 'package:salaris_app/pages/home.dart';
 import 'package:provider/provider.dart';
 import 'package:salaris_app/pages/salary_entry_add.dart';
@@ -18,9 +17,6 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider<SalaryBloc>(
           create: (context) => SalaryBloc(),
-        ),
-        ChangeNotifierProvider<SalaryEntryBuilderBloc>(
-          create: (context) => SalaryEntryBuilderBloc(),
         ),
       ],
       child: MaterialApp(
